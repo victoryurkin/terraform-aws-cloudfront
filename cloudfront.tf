@@ -1,3 +1,7 @@
+resource "aws_cloudfront_origin_access_identity" "default" {
+  comment = "main"
+}
+
 resource "aws_cloudfront_distribution" "default" {
   enabled             = var.enabled
   is_ipv6_enabled     = var.is_ipv6_enabled
@@ -42,27 +46,30 @@ resource "aws_cloudfront_distribution" "default" {
     cloudfront_default_certificate = var.acm_certificate_arn == "" ? true : false
   }
 
-  default_cache_behavior {
-    allowed_methods  = var.allowed_methods
-    cached_methods   = var.cached_methods
-    target_origin_id = var.origin_id
-    compress         = var.compress
+  dynamic "default_cache_behavior" {
+    for_each = var.origins
+    content {
+      allowed_methods  = var.allowed_methods
+      cached_methods   = var.cached_methods
+      target_origin_id = origins.origin_id
+      compress         = var.compress
 
-    forwarded_values {
-      headers = var.forward_headers
+      forwarded_values {
+        headers = var.forward_headers
 
-      query_string = var.forward_query_string
+        query_string = var.forward_query_string
 
-      cookies {
-        forward           = var.forward_cookies
-        whitelisted_names = var.forward_cookies_whitelisted_names
+        cookies {
+          forward           = var.forward_cookies
+          whitelisted_names = var.forward_cookies_whitelisted_names
+        }
       }
-    }
 
-    viewer_protocol_policy = var.viewer_protocol_policy
-    default_ttl            = var.default_ttl
-    min_ttl                = var.min_ttl
-    max_ttl                = var.max_ttl
+      viewer_protocol_policy = var.viewer_protocol_policy
+      default_ttl            = var.default_ttl
+      min_ttl                = var.min_ttl
+      max_ttl                = var.max_ttl
+    }
   }
 
   web_acl_id = var.web_acl_id
