@@ -241,3 +241,19 @@ variable "custom_error_responses" {
     response_page_path    = "/index.html"
   }]
 }
+
+########################################################
+# Restrictions
+########################################################
+
+variable "geo_restriction_type" {
+  type        = string
+  description = "(Optional) - Method that use to restrict distribution of your content by country: `none`, `whitelist`, or `blacklist`"
+  default     = "none"
+}
+
+variable "geo_restriction_locations" {
+  type        = list
+  description = "(Optional) - List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist)"
+  default     = []
+}

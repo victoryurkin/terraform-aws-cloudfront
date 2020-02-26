@@ -110,5 +110,13 @@ resource "aws_cloudfront_distribution" "default" {
       response_code         = lookup(custom_error_response.value, "response_code", null)
       response_page_path    = lookup(custom_error_response.value, "response_page_path", null)
     }
+  }
+
+  # Restrictions
+  restrictions {
+    geo_restriction {
+      restriction_type = var.geo_restriction_type
+      locations        = var.geo_restriction_locations
+    }
   }  
 }
