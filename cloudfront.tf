@@ -25,8 +25,8 @@ resource "aws_cloudfront_distribution" "default" {
     for_each = var.origins
     content {
       domain_name = origin.domain_name
-      origin_id   = origin.id
       origin_path = origin.path
+      origin_id   = origin.id
 
       custom_origin_config {
         origin_ssl_protocols     = origin.ssl_protocols
