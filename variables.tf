@@ -134,9 +134,19 @@ variable "comment" {
   description = "Comment for the origin access identity"
 }
 
+variable "logging_enabled" {
+  default     = "false"
+  description = "Wether logging config enabled"
+}
+
 variable "log_include_cookies" {
   default     = "false"
   description = "Include cookies in access logs"
+}
+
+variable "log_bucket_domain_name" {
+  default     = ""
+  description = "S3 bucket domain name for logs"
 }
 
 variable "log_prefix" {

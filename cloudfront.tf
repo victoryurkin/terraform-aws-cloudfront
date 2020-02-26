@@ -76,4 +76,13 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   tags = local.base_tags
+
+  dynamic "logging_config" {
+    for_each = var.logging_enabled ? ["true"] : []
+    content {
+      include_cookies = var.log_include_cookies
+      bucket          = var.log_bucket_domain_name
+      prefix          = var.log_prefix
+    }
+  }  
 }
