@@ -39,7 +39,7 @@ resource "aws_cloudfront_distribution" "default" {
       origin_id   = origin.id
 
       dynamic "custom_header" {
-        for_each = origin.custom_headers ? custom_headers : []
+        for_each = origin.custom_headers ? origin.custom_headers : []
         content {
           name  = custom_header.name
           value = custom_header.value
