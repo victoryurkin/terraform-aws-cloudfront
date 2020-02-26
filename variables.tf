@@ -70,52 +70,44 @@ variable "web_acl_id" {
 
 variable "origins" {
   type = list(object({
-    variable "domain_name" {
+    domain_name = {
       type        = string
       description = "(Required) - The DNS domain name of your custom origin (e.g. website)"
     }
-
-    variable "path" {
+    path = {
       type        = string
       description = "(Optional) - An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin"
     }
-
-    variable "id" {
+    id = {
       type        = string
       description = "(Optional) - An optional element, the id of your custom origin"
     }
-
-    variable "ssl_protocols" {
+    ssl_protocols = {
       type        = list
       description = "(Required) - The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS"
       default     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
     }
-
-    variable "protocol_policy" {
+    protocol_policy = {
       type        = string
       description = "(Required) - The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer"
       default     = "match-viewer"
     }
-
-    variable "read_timeout" {
+    read_timeout = {
       type        = number
       description = "(Optional) The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
       default     = "60"
     }
-
-    variable "keepalive_timeout" {
+    keepalive_timeout = {
       type        = number
       description = "(Optional) The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
       default     = "60"
     }
-
-    variable "http_port" {
+    http_port = {
       type        = number
       description = "(Required) - The HTTP port the custom origin listens on"
       default     = "80"
     }
-
-    variable "https_port" {
+    https_port = {
       type        = number
       description = "(Required) - The HTTPS port the custom origin listens on"
       default     = "443"
