@@ -68,10 +68,18 @@ variable "web_acl_id" {
   default     = ""
 }
 
-variable "origin" {
-  type        = list
-  description = "The list of origins"
-  default     = []
+variable "origins" {
+  type = list(object({
+    domain_name              = string
+    origin_id                = string
+    origin_path              = string
+    http_port                = number
+    https_port               = number
+    origin_protocol_policy   = string
+    origin_ssl_protocols     = string
+    origin_keepalive_timeout = number
+    origin_read_timeout      = number
+  }))
 }
 
 variable "compress" {
