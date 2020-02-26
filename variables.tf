@@ -70,48 +70,15 @@ variable "web_acl_id" {
 
 variable "origins" {
   type = list(object({
-    domain_name = {
-      type        = string
-      description = "(Required) - The DNS domain name of your custom origin (e.g. website)"
-    }
-    path = {
-      type        = string
-      description = "(Optional) - An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin"
-    }
-    id = {
-      type        = string
-      description = "(Optional) - An optional element, the id of your custom origin"
-    }
-    ssl_protocols = {
-      type        = list
-      description = "(Required) - The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS"
-      default     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-    }
-    protocol_policy = {
-      type        = string
-      description = "(Required) - The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer"
-      default     = "match-viewer"
-    }
-    read_timeout = {
-      type        = number
-      description = "(Optional) The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
-      default     = "60"
-    }
-    keepalive_timeout = {
-      type        = number
-      description = "(Optional) The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
-      default     = "60"
-    }
-    http_port = {
-      type        = number
-      description = "(Required) - The HTTP port the custom origin listens on"
-      default     = "80"
-    }
-    https_port = {
-      type        = number
-      description = "(Required) - The HTTPS port the custom origin listens on"
-      default     = "443"
-    }
+    domain_name       = string
+    path              = string
+    id                = string
+    ssl_protocols     = { default = ["TLSv1", "TLSv1.1", "TLSv1.2"] }
+    protocol_policy   = { default = "match-viewer" }
+    read_timeout      = { default = 60 }
+    keepalive_timeout = { default = 60 }
+    http_port         = { default = 80 }
+    https_port        = { default = 443 }
   }))
 }
 
