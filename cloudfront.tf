@@ -39,7 +39,7 @@ resource "aws_cloudfront_distribution" "default" {
       origin_id   = origin.id
 
       dynamic "custom_header" {
-        for_each = origin.custom_headers
+        for_each = origin.custom_headers ? custom_headers : []
         content {
           name  = custom_header.name
           value = custom_header.value
@@ -79,7 +79,7 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   dynamic "ordered_cache_behavior" {
-    for_each = var.behaviors.ordered
+    for_each = var.ordered_behaviors
     content {
       path_pattern           = ordered_cache_behavior.path_pattern
       target_origin_id       = default_cache_behavior.target_origin_id
