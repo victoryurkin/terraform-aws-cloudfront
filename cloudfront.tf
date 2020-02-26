@@ -2,13 +2,6 @@ resource "aws_cloudfront_origin_access_identity" "default" {
   comment = "main"
 }
 
-locals {
-  default_cache_behavior {
-    target_origin_id = var.default_behavior_target_origin_id
-    viewer_protocol_policy = var.default_behavior_viewer_protocol_policy
-  }
-}
-
 resource "aws_cloudfront_distribution" "default" {
   
   # General
@@ -67,22 +60,22 @@ resource "aws_cloudfront_distribution" "default" {
   # Behaviors
 
   default_cache_behavior {
-    target_origin_id       = local.default_cache_behavior.target_origin_id
-    viewer_protocol_policy = local.default_cache_behavior.viewer_protocol_policy || var.cache_behavior_viewer_protocol_policy_default
-    allowed_methods        = local.default_cache_behavior.allowed_methods || var.cache_behavior_allowed_methods_default
-    cached_methods         = local.default_cache_behavior.cached_methods || var.cache_behavior_cached_methods_default
+    target_origin_id       = var.default_behavior_target_origin_id
+    viewer_protocol_policy = var.cache_behavior_viewer_protocol_policy_default
+    allowed_methods        = var.cache_behavior_allowed_methods_default
+    cached_methods         = var.cache_behavior_cached_methods_default
     
     forwarded_values {
-      query_string = local.default_cache_behavior.forward_query_string || var.cache_behavior_forwarded_values_query_string_default
+      query_string = var.cache_behavior_forwarded_values_query_string_default
       cookies {
-        forward           = local.default_cache_behavior.forward_cookies || var.cache_behavior_forwarded_values_cookies_forward_default
-        whitelisted_names = local.default_cache_behavior.forward_cookies_whitelisted_names || var.cache_behavior_forwarded_values_cookies_whitelisted_names_default
+        forward           = var.cache_behavior_forwarded_values_cookies_forward_default
+        whitelisted_names = var.cache_behavior_forwarded_values_cookies_whitelisted_names_default
       }
     }
 
-    default_ttl = local.default_cache_behavior.default_ttl || var.cache_behavior_default_ttl_default
-    min_ttl     = local.default_cache_behavior.min_ttl || var.cache_behavior_min_ttl_default
-    max_ttl     = local.default_cache_behavior.max_ttl || var.cache_behavior_max_ttl_default
+    default_ttl = var.cache_behavior_default_ttl_default
+    min_ttl     = var.cache_behavior_min_ttl_default
+    max_ttl     = var.cache_behavior_max_ttl_default
   }
 
   dynamic "ordered_cache_behavior" {

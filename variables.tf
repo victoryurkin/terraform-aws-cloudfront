@@ -167,11 +167,6 @@ variable "default_behavior_target_origin_id" {
   description = "(Required) - Default behavior target origin id"
 }
 
-variable "default_behavior_viewer_protocol_policy" {
-  type        = string
-  description = "(Required) - Default behavior viewer protocol policy"
-}
-
 variable "ordered_behaviors" {
   type        = list
   description = "(Optional) - List of ordered behaviors"
