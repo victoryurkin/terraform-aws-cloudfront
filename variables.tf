@@ -102,7 +102,7 @@ variable "default_origin_keepalive_timeout" {
 }
 
 variable "default_origin_http_port" {
-  type        number
+  type        = number
   description = "The HTTP port the custom origin listens on"
   default     = 80
 }
