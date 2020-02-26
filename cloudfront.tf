@@ -1,7 +1,3 @@
-resource "aws_cloudfront_origin_access_identity" "default" {
-  comment = var.origin_id
-}
-
 resource "aws_cloudfront_distribution" "default" {
   enabled             = var.enabled
   is_ipv6_enabled     = var.is_ipv6_enabled
