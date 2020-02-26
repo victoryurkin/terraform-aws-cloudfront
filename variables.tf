@@ -68,32 +68,53 @@ variable "web_acl_id" {
   default     = ""
 }
 
+########################################################
+# Origin object
+########################################################
+
 variable "origins" {
-  type = list(object({
-    domain_name       = string
-    path              = string
-    id                = string
-    ssl_protocols     = list(string)
-    protocol_policy   = string
-    read_timeout      = number
-    keepalive_timeout = number
-    http_port         = number
-    https_port        = number
-  }))
-  default = [
-    {
-      domain_name       = ""
-      path              = ""
-      id                = ""
-      ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-      protocol_policy   = "match-viewer"
-      read_timeout      = 60
-      keepalive_timeout = 60
-      http_port         = 80
-      https_port        = 443
-    }
-  ]
+  type = list(object)
+  description = "List of origin objects"
 }
+
+variable "default_origin_ssl_protocols" {
+  type        = list(string)
+  description = "The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS"  
+  default     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+}
+
+variable "default_origin_protocol_policy" {
+  type        = string
+  description = "The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer"
+  default     = "match-viewer"
+}
+
+variable "default_origin_read_timeout" {
+  type        = number
+  description = "The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
+  default     = 60
+}
+
+variable "default_origin_keepalive_timeout" {
+  type        = number
+  description = "The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
+  default     = 60
+}
+
+variable "default_origin_http_port" {
+  type        number
+  description = "The HTTP port the custom origin listens on"
+  default     = 80
+}
+
+variable "default_origin_https_port" {
+  type        = number
+  description = "The HTTPS port the custom origin listens on"
+  default     = 443
+}
+
+
+
 
 variable "compress" {
   description = "(Optional) Whether you want CloudFront to automatically compress content for web requests that include Accept-Encoding: gzip in the request header (default: false)"

@@ -29,12 +29,12 @@ resource "aws_cloudfront_distribution" "default" {
       origin_id   = origin.id
 
       custom_origin_config {
-        origin_ssl_protocols     = origin.ssl_protocols
-        origin_protocol_policy   = origin.protocol_policy
-        origin_read_timeout      = origin.read_timeout
-        origin_keepalive_timeout = origin.keepalive_timeout
-        http_port                = origin.http_port
-        https_port               = origin.https_port
+        origin_ssl_protocols     = origin.ssl_protocols || var.default_origin_ssl_protocols
+        origin_protocol_policy   = origin.protocol_policy || var.default_origin_protocol_policy
+        origin_read_timeout      = origin.read_timeout || var.default_origin_read_timeout
+        origin_keepalive_timeout = origin.keepalive_timeout || var.default_origin_keepalive_timeout
+        http_port                = origin.http_port || var.default_origin_http_port
+        https_port               = origin.https_port || var.default_origin_https_port
       }
     }
   }
