@@ -82,6 +82,9 @@ variable "origins" {
   }))
   default = [
     {
+      domain_name       = ""
+      path              = ""
+      id                = ""
       ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
       protocol_policy   = "match-viewer"
       read_timeout      = 60
