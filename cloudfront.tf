@@ -21,18 +21,21 @@ resource "aws_cloudfront_distribution" "default" {
     }
   }
 
-  origin {
-    domain_name = var.origin_domain_name
-    origin_id   = var.origin_id
-    origin_path = var.origin_path
+  dynamic "origin" {
+    for_each = var.origins
+    content {
+      domain_name = origin.domain_name
+      origin_id   = origin.id
+      origin_path = origin.path
 
-    custom_origin_config {
-      http_port                = var.origin_http_port
-      https_port               = var.origin_https_port
-      origin_protocol_policy   = var.origin_protocol_policy
-      origin_ssl_protocols     = var.origin_ssl_protocols
-      origin_keepalive_timeout = var.origin_keepalive_timeout
-      origin_read_timeout      = var.origin_read_timeout
+      custom_origin_config {
+        origin_ssl_protocols     = origin.ssl_protocols
+        origin_protocol_policy   = origin.protocol_policy
+        origin_read_timeout      = origin.read_timeout
+        origin_keepalive_timeout = origin.keepalive_timeout
+        http_port                = origin.http_port
+        https_port               = origin.https_port
+      }
     }
   }
 
