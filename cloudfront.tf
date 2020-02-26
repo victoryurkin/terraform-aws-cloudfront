@@ -41,18 +41,18 @@ resource "aws_cloudfront_distribution" "default" {
       dynamic "custom_header" {
         for_each = lookup(origin.value, "custom_headers", [])
         content {
-          name  = custom_header.name
-          value = custom_header.value
+          name  = custom_header.value.name
+          value = custom_header.value.value
         }
       }
 
       custom_origin_config {
-        origin_ssl_protocols     = origin.ssl_protocols || var.origin_ssl_protocols_default
-        origin_protocol_policy   = origin.protocol_policy || var.origin_protocol_policy_default
-        origin_read_timeout      = origin.read_timeout || var.origin_read_timeout_default
-        origin_keepalive_timeout = origin.keepalive_timeout || var.origin_keepalive_timeout_default
-        http_port                = origin.http_port || var.origin_http_port_default
-        https_port               = origin.https_port || var.origin_https_port_default
+        origin_ssl_protocols     = lookup(origin.value, "ssl_protocols", var.origin_ssl_protocols_default)
+        origin_protocol_policy   = lookup(origin.value, "protocol_policy", var.origin_protocol_policy_default)
+        origin_read_timeout      = lookup(origin.value, "read_timeout", var.origin_read_timeout_default)
+        origin_keepalive_timeout = lookup(origin.value, "keepalive_timeout", var.origin_keepalive_timeout_default)
+        http_port                = lookup(origin.value, "http_port", var.origin_http_port_default)
+        https_port               = lookup(origin.value, "https_port", var.origin_https_port_default)
       }
     }
   }
@@ -81,23 +81,23 @@ resource "aws_cloudfront_distribution" "default" {
   dynamic "ordered_cache_behavior" {
     for_each = var.ordered_behaviors
     content {
-      path_pattern           = ordered_cache_behavior.path_pattern
-      target_origin_id       = default_cache_behavior.target_origin_id
-      viewer_protocol_policy = default_cache_behavior.viewer_protocol_policy || var.cache_behavior_viewer_protocol_policy_default
-      allowed_methods        = default_cache_behavior.allowed_methods || var.cache_behavior_allowed_methods_default
-      cached_methods         = default_cache_behavior.cached_methods || var.cache_behavior_cached_methods_default
+      path_pattern           = ordered_cache_behavior.value.path_pattern
+      target_origin_id       = default_cache_behavior.value.target_origin_id
+      viewer_protocol_policy = lookup(default_cache_behavior.value, "viewer_protocol_policy", var.cache_behavior_viewer_protocol_policy_default)
+      allowed_methods        = lookup(default_cache_behavior.value, "allowed_methods", var.cache_behavior_allowed_methods_default)
+      cached_methods         = lookup(default_cache_behavior.value, "cached_methods", var.cache_behavior_cached_methods_default)
       
       forwarded_values {
-        query_string = default_cache_behavior.forward_query_string || var.cache_behavior_forwarded_values_query_string_default
+        query_string = lookup(default_cache_behavior.value, "forward_query_string", var.cache_behavior_forwarded_values_query_string_default)
         cookies {
-          forward           = default_cache_behavior.forward_cookies || var.cache_behavior_forwarded_values_cookies_forward_default
-          whitelisted_names = default_cache_behavior.forward_cookies_whitelisted_names || var.cache_behavior_forwarded_values_cookies_whitelisted_names_default
+          forward           = lookup(default_cache_behavior.value, "forward_cookies", var.cache_behavior_forwarded_values_cookies_forward_default)
+          whitelisted_names = lookup(default_cache_behavior.value, "forward_cookies_whitelisted_names", var.cache_behavior_forwarded_values_cookies_whitelisted_names_default)
         }
       }
 
-      default_ttl = default_cache_behavior.default_ttl || var.cache_behavior_default_ttl_default
-      min_ttl     = default_cache_behavior.min_ttl || var.cache_behavior_min_ttl_default
-      max_ttl     = default_cache_behavior.max_ttl || var.cache_behavior_max_ttl_default      
+      default_ttl = lookup(default_cache_behavior.value, "default_ttl", var.cache_behavior_default_ttl_default)
+      min_ttl     = lookup(default_cache_behavior.value, "min_ttl", var.cache_behavior_min_ttl_default)
+      max_ttl     = lookup(default_cache_behavior.value, "max_ttl", var.cache_behavior_max_ttl_default)
     }
   }  
 
