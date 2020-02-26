@@ -162,6 +162,10 @@ variable "origin_https_port_default" {
 # Behaviors
 ########################################################
 
+variable "behaviors" {
+  type = object
+  description = "(Required) - Cache behaviors object. Contains default and odered attributes"
+}
 
 variable "cache_behavior_viewer_protocol_policy_default" {
   type        = string
