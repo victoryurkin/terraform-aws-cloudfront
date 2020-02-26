@@ -59,7 +59,6 @@ variable "custom_error_response" {
   # http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/custom-error-pages.html#custom-error-pages-procedure
   # https://www.terraform.io/docs/providers/aws/r/cloudfront_distribution.html#custom-error-response-arguments
   description = "(Optional) - List of one or more custom error response element maps"
-
   type    = list
   default = []
 }
@@ -217,7 +216,6 @@ variable "geo_restriction_type" {
 
 variable "geo_restriction_locations" {
   type = list
-
   # e.g. ["US", "CA", "GB", "DE"]
   default     = []
   description = "List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist)"
