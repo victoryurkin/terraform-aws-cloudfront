@@ -9,15 +9,17 @@ resource "aws_cloudfront_distribution" "default" {
   default_root_object = var.default_root_object
   price_class         = var.price_class
 
-  logging_config = {
-    include_cookies = var.log_include_cookies
-    bucket          = var.logs_bucket_domain_name
-    prefix          = var.log_prefix
+  aliases = var.aliases
+
+  dynamic "custom_error_response" {
+    for_each = var.custom_error_response
+    content {
+      error_caching_min_ttl = lookup(custom_error_response.value, "error_caching_min_ttl", null)
+      error_code            = custom_error_response.value.error_code
+      response_code         = lookup(custom_error_response.value, "response_code", null)
+      response_page_path    = lookup(custom_error_response.value, "response_page_path", null)
+    }
   }
-
-  aliases = [var.aliases]
-
-  custom_error_response = [var.custom_error_response]
 
   origin {
     domain_name = var.origin_domain_name
@@ -48,13 +50,13 @@ resource "aws_cloudfront_distribution" "default" {
     compress         = var.compress
 
     forwarded_values {
-      headers = [var.forward_headers]
+      headers = var.forward_headers
 
       query_string = var.forward_query_string
 
       cookies {
         forward           = var.forward_cookies
-        whitelisted_names = [var.forward_cookies_whitelisted_names]
+        whitelisted_names = var.forward_cookies_whitelisted_names
       }
     }
 
@@ -64,7 +66,7 @@ resource "aws_cloudfront_distribution" "default" {
     max_ttl                = var.max_ttl
   }
 
-  ordered_cache_behavior = var.cache_behavior
+  cache_behavior = var.cache_behavior
 
   web_acl_id = var.web_acl_id
 
