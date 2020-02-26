@@ -73,7 +73,7 @@ variable "origins" {
     domain_name       = string
     path              = string
     id                = string
-    ssl_protocols     = list
+    ssl_protocols     = list(string)
     protocol_policy   = string
     read_timeout      = number
     keepalive_timeout = number
@@ -81,12 +81,14 @@ variable "origins" {
     https_port        = number
   }))
   default = [
-    ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-    protocol_policy   = "match-viewer"
-    read_timeout      = 60
-    keepalive_timeout = 60
-    http_port         = 80
-    https_port        = 443
+    {
+      ssl_protocols     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+      protocol_policy   = "match-viewer"
+      read_timeout      = 60
+      keepalive_timeout = 60
+      http_port         = 80
+      https_port        = 443
+    }
   ]
 }
 
