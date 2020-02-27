@@ -93,6 +93,7 @@ resource "aws_cloudfront_distribution" "default" {
           forward           = lookup(ordered_cache_behavior.value, "forward_cookies", var.cache_behavior_forwarded_values_cookies_forward_default)
           whitelisted_names = lookup(ordered_cache_behavior.value, "forward_cookies_whitelisted_names", var.cache_behavior_forwarded_values_cookies_whitelisted_names_default)
         }
+        headers      = lookup(ordered_cache_behavior.value, "forward_headers", var.cache_behavior_forwarded_values_headers_default)
       }
 
       default_ttl = lookup(ordered_cache_behavior.value, "default_ttl", var.cache_behavior_default_ttl_default)

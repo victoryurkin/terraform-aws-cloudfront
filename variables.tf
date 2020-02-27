@@ -209,6 +209,12 @@ variable "cache_behavior_forwarded_values_cookies_whitelisted_names_default" {
   default     = []
 }
 
+variable "cache_behavior_forwarded_values_headers_default" {
+  type        = list
+  description = "(Optional) - List of forwarded cookie names"
+  default     = ["*"]
+}
+
 variable "cache_behavior_default_ttl_default" {
   type        = number
   description = "(Optional) - Default amount of time (in seconds) that an object is in a CloudFront cache"
