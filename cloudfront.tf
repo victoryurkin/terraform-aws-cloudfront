@@ -82,22 +82,22 @@ resource "aws_cloudfront_distribution" "default" {
     for_each = var.ordered_behaviors
     content {
       path_pattern           = ordered_cache_behavior.value.path_pattern
-      target_origin_id       = default_cache_behavior.value.target_origin_id
-      viewer_protocol_policy = lookup(default_cache_behavior.value, "viewer_protocol_policy", var.cache_behavior_viewer_protocol_policy_default)
-      allowed_methods        = lookup(default_cache_behavior.value, "allowed_methods", var.cache_behavior_allowed_methods_default)
-      cached_methods         = lookup(default_cache_behavior.value, "cached_methods", var.cache_behavior_cached_methods_default)
+      target_origin_id       = ordered_cache_behavior.value.target_origin_id
+      viewer_protocol_policy = lookup(ordered_cache_behavior.value, "viewer_protocol_policy", var.cache_behavior_viewer_protocol_policy_default)
+      allowed_methods        = lookup(ordered_cache_behavior.value, "allowed_methods", var.cache_behavior_allowed_methods_default)
+      cached_methods         = lookup(ordered_cache_behavior.value, "cached_methods", var.cache_behavior_cached_methods_default)
       
       forwarded_values {
-        query_string = lookup(default_cache_behavior.value, "forward_query_string", var.cache_behavior_forwarded_values_query_string_default)
+        query_string = lookup(ordered_cache_behavior.value, "forward_query_string", var.cache_behavior_forwarded_values_query_string_default)
         cookies {
-          forward           = lookup(default_cache_behavior.value, "forward_cookies", var.cache_behavior_forwarded_values_cookies_forward_default)
-          whitelisted_names = lookup(default_cache_behavior.value, "forward_cookies_whitelisted_names", var.cache_behavior_forwarded_values_cookies_whitelisted_names_default)
+          forward           = lookup(ordered_cache_behavior.value, "forward_cookies", var.cache_behavior_forwarded_values_cookies_forward_default)
+          whitelisted_names = lookup(ordered_cache_behavior.value, "forward_cookies_whitelisted_names", var.cache_behavior_forwarded_values_cookies_whitelisted_names_default)
         }
       }
 
-      default_ttl = lookup(default_cache_behavior.value, "default_ttl", var.cache_behavior_default_ttl_default)
-      min_ttl     = lookup(default_cache_behavior.value, "min_ttl", var.cache_behavior_min_ttl_default)
-      max_ttl     = lookup(default_cache_behavior.value, "max_ttl", var.cache_behavior_max_ttl_default)
+      default_ttl = lookup(ordered_cache_behavior.value, "default_ttl", var.cache_behavior_default_ttl_default)
+      min_ttl     = lookup(ordered_cache_behavior.value, "min_ttl", var.cache_behavior_min_ttl_default)
+      max_ttl     = lookup(ordered_cache_behavior.value, "max_ttl", var.cache_behavior_max_ttl_default)
     }
   }  
 
