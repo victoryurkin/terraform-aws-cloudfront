@@ -35,7 +35,7 @@ resource "aws_cloudfront_distribution" "default" {
     for_each = var.origins
     content {
       domain_name = origin.value.domain_name
-      origin_path = origin.value.path
+      origin_path = lookup(origin.value, "path", "")
       origin_id   = origin.value.id
 
       dynamic "custom_header" {
