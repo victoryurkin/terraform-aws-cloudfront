@@ -212,7 +212,7 @@ variable "cache_behavior_forwarded_values_cookies_whitelisted_names_default" {
 variable "cache_behavior_forwarded_values_headers_default" {
   type        = list
   description = "(Optional) - List of forwarded cookie names"
-  default     = ["None"]
+  default     = []
 }
 
 variable "cache_behavior_default_ttl_default" {
