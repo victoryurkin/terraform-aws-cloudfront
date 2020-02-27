@@ -23,7 +23,7 @@ resource "aws_cloudfront_distribution" "default" {
     for_each = var.logging_enabled ? ["true"] : []
     content {
       include_cookies = var.log_include_cookies
-      bucket          = module.s3.this_s3_bucket_bucket_domain_name
+      bucket          = var.log_bucket_domain_name
       prefix          = var.log_prefix
     }
   }
