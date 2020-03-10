@@ -8,12 +8,12 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| client\\_name | Name of the client. | `string` | n/a | yes |
+| client\_name | Name of the client. | `string` | n/a | yes |
 | environment | The organization environment | `string` | n/a | yes |
-| aws\\_region | This is the AWS region. | `string` | n/a | yes |
+| aws\_region | This is the AWS region. | `string` | n/a | yes |
 | provisioning | Is it manually provisioned or using terraform? | `string` | n/a | yes |
-| defcon\\_level | Level of distress! | `number` | n/a | yes |
-| propagate\\_at\\_launch | Propogate at launch | `bool` | n/a | yes |
+| defcon\_level | Level of distress! | `number` | n/a | yes |
+| propagate\_at\_launch | Propogate at launch | `bool` | n/a | yes |
 | comment | Any comments you want to include about the distribution. | `string` | Managed by Terraform | no |
 | default\_root\_object | The object that you want CloudFront to return (for example, index.html) when an end user requests the root URL. | `string` | index.html | no |
 | aliases | Extra CNAMEs (alternate domain names), if any, for this distribution. | `list` | [] | no |
