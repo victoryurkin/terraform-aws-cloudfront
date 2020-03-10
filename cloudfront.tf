@@ -111,7 +111,7 @@ resource "aws_cloudfront_distribution" "default" {
 
   tags = merge(
     {
-      "Name" = format("%s", "Front-End Cloudfront Disctribution ${var.aliases[0]}")
+      "Name" = format("%s", "Front-End Cloudfront Disctribution ${var.client_name}")
     },
     local.base_tags
   )
