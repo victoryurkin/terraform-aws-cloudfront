@@ -32,7 +32,6 @@
 | origin\_keepalive\_timeout\_default | The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. | `number` | 60 | no |
 | origin\_http\_port\_default | The HTTP port the custom origin listens on. | `number` | 80 | no |
 | origin\_https\_port\_default | The HTTPS port the custom origin listens on. | `number` | 443 | no |
-
 | default\_behavior\_target\_origin\_id | The value of ID for the origin that you want CloudFront to route requests to when a request matches the path pattern either for a cache behavior or for the default cache behavior. | `string` | n/a | yes |
 | ordered\_behaviors | A list of the ordered behaviors | `list` | [] | no |
 | cache\_behavior\_viewer\_protocol\_policy\_default | Use this element to specify the protocol that users can use to access the files in the origin specified by TargetOriginId when a request matches the path pattern in PathPattern. One of allow-all, https-only, or redirect-to-https. | `string` | redirect-to-https | no |
@@ -45,7 +44,7 @@
 | cache\_behavior\_forwarded\_values\_headers\_default | Specifies the Headers, if any, that you want CloudFront to vary upon for this cache behavior. Specify * to include all headers. | `list` | [] | no |
 | cache\_behavior\_forwarded\_values\_cookies\_forward\_default | Specifies whether you want CloudFront to forward cookies to the origin that is associated with this cache behavior. You can specify all, none or whitelist. If whitelist, you must include the subsequent whitelisted\_names. | `string` | none | no |
 | cache\_behavior\_forwarded\_values\_cookies\_whitelisted\_names\_default | If you have specified whitelist to forward, the whitelisted cookies that you want CloudFront to forward to your origin. | `list` | [] | no |
-| custom\_error\_responses | List of one or more custom error response element maps. | `list` | `` | no |
+| custom\_error\_responses | List of one or more custom error response element maps. | `list` | `[{error\_caching\_min\_ttl = 0 error\_code            = 403 response\_code         = 200 response\_page\_path    = "/index.html"}]` | no |
 | geo\_restriction\_type | The method that you want to use to restrict distribution of your content by country: none, whitelist, or blacklist. | `string` | none | no |
 | geo\_restriction\_locations | The ISO 3166-1-alpha-2 codes for which you want CloudFront either to distribute your content (whitelist) or not distribute your content (blacklist). | `list` | [] | no |
 
