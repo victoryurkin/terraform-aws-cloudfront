@@ -1,5 +1,4 @@
 # Aetion AWS CloudFront Terraform Module
-This module was created based on https://github.com/cloudposse/terraform-aws-cloudfront-cdn
 
 ## Configure you environment
 
