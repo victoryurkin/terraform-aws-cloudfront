@@ -1,3 +1,7 @@
+resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
+  comment = "CloudFront access identity to S3 bucket"
+}
+
 resource "aws_cloudfront_distribution" "default" {
   # Top-Level Arguments
   enabled             = true
@@ -39,13 +43,24 @@ resource "aws_cloudfront_distribution" "default" {
           value = custom_header.value.value
         }
       }
-      custom_origin_config {
-        origin_ssl_protocols     = lookup(origin.value, "ssl_protocols", var.origin_ssl_protocols_default)
-        origin_protocol_policy   = lookup(origin.value, "protocol_policy", var.origin_protocol_policy_default)
-        origin_read_timeout      = lookup(origin.value, "read_timeout", var.origin_read_timeout_default)
-        origin_keepalive_timeout = lookup(origin.value, "keepalive_timeout", var.origin_keepalive_timeout_default)
-        http_port                = lookup(origin.value, "http_port", var.origin_http_port_default)
-        https_port               = lookup(origin.value, "https_port", var.origin_https_port_default)
+
+      dynamic "s3_origin_config" {
+        for_each = lookup(origin.value, "is_s3_origin", false) ? [true] : []
+        content {
+          origin_access_identity = aws_cloudfront_origin_access_identity.default.cloudfront_access_identity_path
+        }
+      }
+
+      dynamic "custom_origin_config" {
+        for_each = lookup(origin.value, "is_s3_origin", false) ? [] : [true]
+        content {
+          origin_ssl_protocols     = lookup(origin.value, "ssl_protocols", var.origin_ssl_protocols_default)
+          origin_protocol_policy   = lookup(origin.value, "protocol_policy", var.origin_protocol_policy_default)
+          origin_read_timeout      = lookup(origin.value, "read_timeout", var.origin_read_timeout_default)
+          origin_keepalive_timeout = lookup(origin.value, "keepalive_timeout", var.origin_keepalive_timeout_default)
+          http_port                = lookup(origin.value, "http_port", var.origin_http_port_default)
+          https_port               = lookup(origin.value, "https_port", var.origin_https_port_default)
+        }
       }
     }
   }
