@@ -40,12 +40,6 @@ resource "aws_cloudfront_distribution" "default" {
         }
       }
 
-      dynamic "s3_origin_config" {
-        for_each = lookup(origin.value, "is_s3_origin", false) ? [true] : []
-        content {
-        }
-      }
-
       dynamic "custom_origin_config" {
         for_each = lookup(origin.value, "is_s3_origin", false) ? [] : [true]
         content {
