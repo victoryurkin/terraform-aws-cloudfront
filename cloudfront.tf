@@ -1,7 +1,3 @@
-resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
-  comment = "CloudFront access identity to S3 bucket"
-}
-
 resource "aws_cloudfront_distribution" "default" {
   # Top-Level Arguments
   enabled             = true
@@ -47,7 +43,6 @@ resource "aws_cloudfront_distribution" "default" {
       dynamic "s3_origin_config" {
         for_each = lookup(origin.value, "is_s3_origin", false) ? [true] : []
         content {
-          origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path
         }
       }
 
